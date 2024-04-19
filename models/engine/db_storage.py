@@ -2,7 +2,6 @@
 """
 Contains the class DBStorage
 """
-
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -15,6 +14,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -95,5 +95,5 @@ class DBStorage:
             return len(dict_obj)
         for obj in dict_obj.values():
             if isinstance(obj, cls):
-                con += 1 
-        return (con)            
+                con += 1
+        return (con)

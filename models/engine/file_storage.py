@@ -2,7 +2,6 @@
 """
 Contains the FileStorage class
 """
-
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -11,6 +10,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -68,7 +68,7 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-    
+
     def get(self, cls, id):
         """
         A method to retrieve one object.
@@ -88,5 +88,5 @@ class FileStorage:
             return len(self.__objects)
         for obj in self.__objects.values():
             if isinstance(obj, cls):
-                con += 1 
+                con += 1
         return (con)
