@@ -119,10 +119,8 @@ class TestFileStorage(unittest.TestCase):
         """
         Test get method
         """
-         storage = FileStorage()
-        new_dict = {}
-        dict_obj == object
-        
+        storage = FileStorage()
+
 
 
         
