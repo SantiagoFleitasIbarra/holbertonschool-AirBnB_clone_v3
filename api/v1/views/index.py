@@ -11,7 +11,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'])
 def api_stats():
     """stats"""
     from models.amenity import Amenity
