@@ -3,12 +3,9 @@
 
 
 from api.v1.views import app_views
-import json
+from flask import jsonifly
 
 @app_views.route('/status')
 def status():
     """status"""
-    dict = {
-        "status": "OK"
-    }
-    return json.dumps(dict)
+    return jsonifly({"status": "OK"})
