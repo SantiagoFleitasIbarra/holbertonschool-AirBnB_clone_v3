@@ -86,3 +86,40 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorage(unittest.TestCase):
+    """Test cases for DBStorage"""
+
+    @unittest.skipIf(models.storage_t != 'db', "Not testing db storage")
+    def test_get_user(self):
+        # Create a test user
+        user = User(id="1534", name="Test User")
+        
+        # Add the user to the storage
+        self.storage.new(user)
+        self.storage.save()
+        
+        # Retrieve the user from the storage
+        retrieved_user = self.storage.get(User, "1534")
+        
+        # Verify that the retrieved user is not None
+        self.assertIsNotNone(retrieved_user)
+        
+        # Verify that the retrieved user's data is correct
+        self.assertEqual(retrieved_user.id, "1534")
+        self.assertEqual(retrieved_user.name, "Test User")
+
+    @unittest.skipIf(models.storage_t != 'db', "Not testing db storage")
+    def test_count_users(self):
+        # Ensure there's at least one user in the storage
+        self.assertGreaterEqual(self.storage.count(), 0)
+        
+        # Create a test user
+        user = User(id="1534", name="Test User")
+        
+        # Add the user to the storage
+        self.storage.new(user)
+        self.storage.save()
+        
+        # Ensure there's exactly one user after adding
+        self.assertEqual(self.storage.count(User), 1)
