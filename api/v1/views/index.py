@@ -3,9 +3,9 @@
 
 
 from api.v1.views import app_views
-from flask import jsonifly
+from flask import Flask, jsonify
 
 @app_views.route('/status')
 def status():
     """status"""
-    return jsonifly({"status": "OK"})
+    return jsonify({"status": "OK"})
