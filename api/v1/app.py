@@ -2,8 +2,8 @@
 """App instance of Flask"""
 
 
-from flask import Flask
 from api.v1.views import app_views
+from flask import Flask
 from models import storage
 
 app = Flask(__name__)
