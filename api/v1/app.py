@@ -16,7 +16,7 @@ def teardown_appcontext():
     storage.close()
 
 
-@app.errorhandler(404)
+@app.errorhandler(404, methods=['GET'])
 def not_found(error):
     """Not found"""
     return jsonify({"error": "Not found"}), 404
