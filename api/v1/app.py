@@ -7,11 +7,11 @@ from flask import Flask, make_response, jsonify
 from models import storage
 
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix='/api/v1')
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_appcontext():
+def teardown_appcontext(exception):
     """Calls storage.close()"""
     storage.close()
 
