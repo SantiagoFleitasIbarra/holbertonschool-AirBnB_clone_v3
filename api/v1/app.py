@@ -3,7 +3,7 @@
 
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, make_response, jsonify
 from models import storage
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def teardown_appcontext():
 @app.errorhandler(404)
 def errorhandler():
     """Not found"""
-    return jsonify({"error": "Not found"}), 404
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
