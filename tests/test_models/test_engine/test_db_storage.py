@@ -87,39 +87,35 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-class TestDBStorage(unittest.TestCase):
-    """Test cases for DBStorage"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method"""
+        # Create an object to be stored
+        new_state = State()
+        new_state.name = "California"
+        new_state.save()
 
-    @unittest.skipIf(models.storage_t != 'db', "Not testing db storage")
-    def test_get_user(self):
-        # Create a test user
-        user = User(id="1534", name="Test User")
-        
-        # Add the user to the storage
-        self.storage.new(user)
-        self.storage.save()
-        
-        # Retrieve the user from the storage
-        retrieved_user = self.storage.get(User, "1534")
-        
-        # Verify that the retrieved user is not None
-        self.assertIsNotNone(retrieved_user)
-        
-        # Verify that the retrieved user's data is correct
-        self.assertEqual(retrieved_user.id, "1534")
-        self.assertEqual(retrieved_user.name, "Test User")
+        # Try to retrieve the object by its ID
+        retrieved_state = models.storage.get(State, new_state.id)
 
-    @unittest.skipIf(models.storage_t != 'db', "Not testing db storage")
-    def test_count_users(self):
-        # Ensure there's at least one user in the storage
-        self.assertGreaterEqual(self.storage.count(), 0)
-        
-        # Create a test user
-        user = User(id="1534", name="Test User")
-        
-        # Add the user to the storage
-        self.storage.new(user)
-        self.storage.save()
-        
-        # Ensure there's exactly one user after adding
-        self.assertEqual(self.storage.count(User), 1)
+        # Assert that the retrieved object is the same as the original
+        self.assertEqual(retrieved_state, new_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count method"""
+        # Create some objects to be stored
+        new_state1 = State()
+        new_state2 = State()
+        new_city = City()
+        new_state1.save()
+        new_state2.save()
+        new_city.save()
+
+        # Check the count of State objects
+        state_count = models.storage.count(State)
+        self.assertEqual(state_count, 2)
+
+        # Check the count of all objects
+        total_count = models.storage.count()
+        self.assertEqual(total_count, 3)
