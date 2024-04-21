@@ -14,4 +14,5 @@ def status():
 @app_views.route('/api/v1/stats', methods=['GET'])
 def api_stats():
     """stats"""
-    storage.count()
+    stats = storage.count()
+    return jsonify(stats)
